@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Entrepreneurship - Finn Fitzgerald</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1f38;
+    --cream: #f5f0e8;
+    --gold: #c9a84c;
+    --rust: #b85c38;
+    --light: #faf8f4;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--light);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(245, 240, 232, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  nav ul a {
+    text-decoration: none;
+    color: var(--navy);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+
+  .hero-left {
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 4rem 5rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    bottom: -50px; left: -50px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,92,56,0.12) 0%, transparent 70%);
+  }
+
+  .hero-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 1.05;
+    color: var(--cream);
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.7);
+    max-width: 380px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .badge {
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 2px;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .hero-right {
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 4rem;
+    position: relative;
+  }
+
+  .hero-visual {
+    width: 280px; height: 340px;
+    background: var(--navy);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 20px 20px 0px var(--gold);
+    opacity: 0;
+    animation: fadeIn 1s ease 1s forwards;
+  }
+
+  .hero-visual-inner {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    background: linear-gradient(to top, rgba(15,31,56,0.95) 0%, rgba(15,31,56,0.4) 60%, transparent 100%),
+                repeating-linear-gradient(
+                  45deg,
+                  transparent,
+                  transparent 20px,
+                  rgba(201,168,76,0.04) 20px,
+                  rgba(201,168,76,0.04) 21px
+                );
+  }
+
+  .visual-initials {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: rgba(201,168,76,0.15);
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    line-height: 1;
+  }
+
+  .visual-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .visual-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--cream);
+    font-weight: 700;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+    width: 280px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.2s forwards;
+  }
+
+  .stat-box {
+    background: white;
+    padding: 1.2rem;
+    border-left: 3px solid var(--gold);
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 6rem;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--rust); }
+
+  /* ABOUT */
+  #about {
+    background: white;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 1.2rem;
+    font-weight: 300;
+  }
+
+  .about-text p strong { color: var(--navy); font-weight: 500; }
+
+  .about-right { display: flex; flex-direction: column; gap: 1rem; }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: var(--light);
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .info-row:hover { border-left-color: var(--gold); }
+
+  .info-key {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  .info-val {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--navy);
+  }
+
+  /* BLOG */
+  #blog { background: var(--light); }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .blog-card {
+    background: white;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 3px solid transparent;
+  }
+
+  .blog-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(15,31,56,0.1);
+    border-bottom-color: var(--gold);
+  }
+
+  .blog-card-header {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-1 .blog-card-header { background: linear-gradient(135deg, #0f1f38, #1a3a6b); }
+  .card-2 .blog-card-header { background: linear-gradient(135deg, #b85c38, #d4845a); }
+  .card-3 .blog-card-header { background: linear-gradient(135deg, #2d5a27, #4a8f42); }
+
+  .blog-card-body { padding: 1.5rem; }
+
+  .card-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-excerpt {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .card-meta {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    font-size: 0.75rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ASSIGNMENTS */
+  #assignments { background: var(--navy); }
+
+  #assignments .section-label { color: var(--gold); }
+  #assignments .section-title { color: var(--cream); }
+  #assignments .section-title em { color: var(--rust); }
+
+  .assignments-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .assignment-card {
+    padding: 2rem;
+    border: 1px solid rgba(201,168,76,0.2);
+    position: relative;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: pointer;
+  }
+
+  .assignment-card:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .assignment-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgba(201,168,76,0.15);
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    line-height: 1;
+  }
+
+  .assignment-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .assignment-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--cream);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+
+  .assignment-desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: rgba(245,240,232,0.55);
+    font-weight: 300;
+  }
+
+  .assignment-status {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  .status-pending { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .status-done { background: rgba(45,90,39,0.3); color: #6dbf67; }
+
+  /* CONTACT */
+  #contact {
+    background: var(--cream);
+    text-align: center;
+    padding: 6rem;
+  }
+
+  #contact .section-label { justify-content: center; display: flex; }
+
+  .contact-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
+
+  .contact-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+
+  .contact-email {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--navy);
+    font-style: italic;
+    text-decoration: none;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 0.25rem;
+    transition: color 0.2s;
+  }
+
+  .contact-email:hover { color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 2rem 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    font-weight: 700;
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  .footer-copy {
+    font-size: 0.8rem;
+    color: rgba(245,240,232,0.4);
+  }
+
+  .footer-class {
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* BLOG POST MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,31,56,0.85);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: white;
+    max-width: 680px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 3rem;
+    position: relative;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    background: none; border: none;
+    font-size: 1.5rem; cursor: pointer;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--navy); }
+
+  .modal-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .modal-meta {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .modal-body {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #444;
+    font-weight: 300;
+  }
+
+  .modal-body p { margin-bottom: 1.2rem; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 2rem; }
+    nav ul { gap: 1.5rem; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 4rem 2rem; }
+    .hero-right { padding: 3rem 2rem; }
+    #about { grid-template-columns: 1fr; padding: 4rem 2rem; }
+    section { padding: 4rem 2rem; }
+    .blog-grid { grid-template-columns: 1fr; }
+    .assignments-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem; }
+    #contact { padding: 4rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Digital Entrepreneurship — <span>Finn Fitzgerald</span></div>
+  <ul>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#assignments">Assignments</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-tag">Digital Entrepreneurship · ENTR3015</div>
+    <h1 class="hero-name">Finn<br><em>Fitzgerald</em></h1>
+    <p class="hero-desc">A 4th-year Operations Management student exploring the intersection of business strategy, emerging technology, and entrepreneurial thinking.</p>
+    <div class="hero-badges">
+      <span class="badge">Operations Management</span>
+      <span class="badge">4th Year</span>
+      <span class="badge">ENTR3015</span>
+    </div>
+  </div>
+  <div class="hero-right" style="background:var(--cream);"></div>
+</section>
+
+
+
+
+
+<!-- BLOG -->
+<section id="blog" style="background:var(--light);padding:6rem;">
+  <div class="reveal">
+    <div class="section-label">Latest Writing</div>
+    <h2 class="section-title">From the <em>Blog</em></h2>
+  </div>
+  <div class="blog-grid">
+    <div class="blog-card card-1 reveal" onclick="openModal('blog1')">
+      <div class="blog-card-header">✏️</div>
+      <div class="blog-card-body">
+        <div class="card-tag">Introduction</div>
+        <div class="card-title">Blog 1</div>
+        <div class="card-excerpt">An introduction to who I am, why I chose Digital Entrepreneurship, and what I hope to get out of this course.</div>
+        <div class="card-meta">
+          <span>ENTR3015 · Blog Post 1</span>
+          <span>Spring 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ASSIGNMENTS_REMOVED -->
+<section id="assignments" style="background:white;padding:6rem;">
+  <div class="reveal">
+    <div class="section-label">Course Work</div>
+    <h2 class="section-title">Class <em>Assignments</em></h2>
+  </div>
+  <div class="blog-grid">
+    <div class="blog-card card-2 reveal" onclick="openModal('assignment1')">
+      <div class="blog-card-header">📋</div>
+      <div class="blog-card-body">
+        <div class="card-tag">Assignment 1</div>
+        <div class="card-title">Business Model Quiz</div>
+        <div class="card-excerpt">A $1,000,000 investment analysis comparing GoPuff, Cameo, and Bolt — and making the case for where the smart money goes.</div>
+        <div class="card-meta">
+          <span>ENTR3015 · Assignment 1</span>
+          <span>Spring 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--navy);padding:4rem 6rem;">
+  <div style="display:flex;flex-direction:column;gap:0.6rem;">
+    <span style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--cream);font-weight:700;">Finn Fitzgerald</span>
+    <a href="mailto:fitzgefp@mail.uc.edu" style="color:var(--gold);font-size:0.95rem;text-decoration:none;">fitzgefp@mail.uc.edu</a>
+    <span style="color:rgba(245,240,232,0.6);font-size:0.9rem;font-weight:300;">Digital Entrepreneurship</span>
+    <span style="color:rgba(245,240,232,0.6);font-size:0.9rem;font-weight:300;">ENTR-3015</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Digital Entrepreneurship — <span>Finn Fitzgerald</span></div>
+  <div class="footer-copy">© 2026 Finn Fitzgerald</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalContent">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Blog posts content
+  const posts = {
+    blog1: {
+      tag: 'Introduction · Blog Post 1',
+      title: 'Blog 1',
+      meta: 'Finn Fitzgerald · ENTR3015 · Spring 2026',
+      body: `
+        <p>My name is Finn Fitzgerald and I am a 4th year Operations Management within Lindner College of Business. I am taking this class because I have a free elective credit available and would like to further my knowledge in entrepreneurship, specifically in the digital world. I have an elementary level of knowledge on entrepreneurship already as it is something I am interested in at some point in my career, but feel like I can learn a lot more within a semester.</p>
+        <p>I chose this class specifically over any other entrepreneurship course is due to the digital aspect as our society is moving digitally day-by-day and it is only a matter of time until almost our entire lives revolve around technology. In this class, I am looking to learn how to start a brand new company and being able to put the reality of what it takes into perspective. I also hope to be able to further my knowledge on AI and hopefully be able to integrate AI within a future business startup.</p>
+        <p>Also, I am just looking to gain more networking skills through this course. Whether it is through other students or through people outside this course, I am just hoping to meet more people and learn about different professions, backgrounds, and stories. I am a very personable person and I enjoy being able to hear what drives each individual person to do what they want to do.</p>
+      `
+    },
+    assignment1: {
+      tag: 'Assignment 1 · Business Model Quiz',
+      title: 'Business Model Quiz',
+      meta: 'Finn Fitzgerald · ENTR3015 · Spring 2026',
+      body: `
+        <p>If I were given $1,000,000 right now to invest in one of the three companies, GoPuff, Cameo, and Bolt, I would put my money towards Bolt for many reasons. From a first glance, all three companies are very intriguing with a solid proposition, but only one of the companies appears to be built for the long term. The company I am talking about is Bolt.</p>
+        <p>GoPuff is honestly the most interesting out of the three options as it acts as a sort of DoorDash convenient store with quick delivery. As it sounds, this idea stemmed from the pandemic. It gave people the opportunity to get snacks or essentials without the risk of leaving their house which was a must for many people with compromised immune systems. Right as the pandemic ended, issues started emerging within GoPuff as customer traffic died down and fixed costs outweighed revenue. With the amount of capital needed to sustain warehouses for goods, as well as paying drivers, not to mention a declining market, it is easily one that I would not invest in. While this idea sounds great to a college student, Snag has already taken over that market as they have done nearly the exact same thing as GoPuff, but kept it within a university area and gives scooter "drivers" the flexibility to work on their own schedule, which fix the two main downsides of GoPuff.</p>
+        <p>For Cameo's case, it sounds much more feasible than the idea of GoPuff with the concept being that fans can pay celebrities or anyone for a personalized video. Originally, it was a hit with videos of celebrities within other happy birthdays starting appearing on social media, but with this type of service, there is no recurring payment. Users would download the app for a single occasion and then not touch it after their one transaction. While Cameo is very popular around the US to this day, it is not something that people are constantly pouring money into, therefore it is not something I would invest in.</p>
+        <p>On the other hand, Bolt is a suitable business model. It solves a real problem within the digital marketplace, cart abandonment. According to SellersCommerce, cart abandonment within e-commerce causes around $18 billion in revenue to the industry annually. Bolt is designed to combat that issue. Typically customers would have to enter their websites account information, their payment information, their billing and shipping information, and other information just to purchase their items. Now, Bolt designed a one-click checkout where customers can create a Bolt account through their app or website and enter their information there, and now whenever they go to checkout at an online retailer, they can enter their Bolt information and be on their way. Bolt charges the retailer a fee to integrate their software but remains free to the user, making it an ideal platform as a first time user does not have to pay anything. The main draw towards wanting to invest in Bolt is the scalability. It was the main drawback of GoPuff and Cameo, but for this, it gets more valuable the more traction it gets. Not only with ease of scaling from customer convenience, it is also a software which allows Bolt to have much less fixed costs and a cheap and seamless integration for any company looking to use their software.</p>
+        <p>With GoPuff losing a large margin of their traction once COVID passed, and Cameo relying too heavily on single transactional events, Bolt is the clear choice with an easily scalable service that will continue to get more desirable the more people use it. Their business model is built to be integrated widespread, and is tied to a growing industry making Bolt here to stay. For all of these reasons, Bolt would be the company I would choose to give my $1,000,000 investment to.</p>
+      `
+    }
+  };
+
+  function openModal(key) {
+    const post = posts[key];
+    document.getElementById('modalBody').innerHTML = `
+      <div class="modal-tag">${post.tag}</div>
+      <div class="modal-title">${post.title}</div>
+      <div class="modal-meta">${post.meta}</div>
+      <div class="modal-body">${post.body}</div>
+    `;
+    document.getElementById('modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
