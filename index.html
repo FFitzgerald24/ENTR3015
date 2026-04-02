@@ -720,6 +720,18 @@
         </div>
       </div>
     </div>
+    <div class="blog-card card-1 reveal" onclick="openModal('blog4')">
+      <div class="blog-card-header">🤖</div>
+      <div class="blog-card-body">
+        <div class="card-tag">Blog Post 4</div>
+        <div class="card-title">Blog 4</div>
+        <div class="card-excerpt">Why humanoid robots like Tesla's Optimus are the emerging technology that excites me most — and what it means for the future of operations.</div>
+        <div class="card-meta">
+          <span>ENTR3015 · Blog Post 4</span>
+          <span>Spring 2026</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 <section id="assignments" style="background:white;padding:6rem;">
@@ -747,7 +759,7 @@
 <section id="contact" style="background:var(--navy);padding:4rem 6rem;">
   <div style="display:flex;flex-direction:column;gap:0.6rem;">
     <span style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--cream);font-weight:700;">Finn Fitzgerald</span>
-    <a href="mailto:fitzgefp@mail.uc.edu" style="color:var(--gold);font-size:0.95rem;text-decoration:none;">fitzgefp@mail.uc.edu</a>
+    <a href="/cdn-cgi/l/email-protection#6b0d021f110c0e0d1b2b060a0207451e08450e0f1e" style="color:var(--gold);font-size:0.95rem;text-decoration:none;"><span class="__cf_email__" data-cfemail="45232c313f222023350528242c296b30266b202130">[email&#160;protected]</span></a>
     <span style="color:rgba(245,240,232,0.6);font-size:0.9rem;font-weight:300;">Digital Entrepreneurship</span>
     <span style="color:rgba(245,240,232,0.6);font-size:0.9rem;font-weight:300;">ENTR-3015</span>
   </div>
@@ -767,7 +779,7 @@
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
@@ -811,6 +823,15 @@
         <p>Within this time and the following 10 years, I would also like to start acquiring properties. I hope to already have a property of my own at this time, but I have always had a knack for craftsmanship and would like to start getting into flipping houses and eventually renting them out to tenants. I do not see myself going this route instantly because it requires a substantial amount of money beforehand, but I would like to have that passive income later in life from renting a property, as well as the value of owning land myself. While my future may be uncertain, I do know that I will use every moment and opportunity to better myself as a person and as a worker to succeed throughout my career.</p>
       `
     },
+    blog4: {
+      tag: 'Blog Post 4',
+      title: 'Blog 4',
+      meta: 'Finn Fitzgerald · ENTR3015 · Spring 2026',
+      body: `
+        <p>The emerging technology that excites me the most for the future, and specifically my interest in a career are humanoid robots. A humanoid robot is a robot designed to resemble a human with the ability to work in a space that is already configured around humans. This allows companies to add autonomy into production, distribution, and many other aspects of operations without having to make significant changes to their layout. The most common current model of a humanoid robot is Tesla's Optimus. Optimus was announced back in 2021, and is now on their 3rd generation of robots which are already showing significant improvement from earlier generations.</p>
+        <p>Humanoid robots are interesting to me because the number one cost in almost every aspect of a supply chain is labor. Being able to have robots completing tasks 24/7 without taking vacation or sick days, and the ease of reprogramming for task variety, are all the key reasons why these robots are the future in Operations. While companies such as Tesla are refining their robots daily, they still face some challenges. Battery life, unstable work environments, and job displacement are all reasons as to why these robots are not being rolled out nationwide, but humanoid robots have already shown the progression to know that they are the future of operations.</p>
+      `
+    },
     assignment1: {
       tag: 'Assignment 1 · Business Model Quiz',
       title: 'Business Model Quiz',
@@ -839,14 +860,4 @@
 
   function closeModal() {
     document.getElementById('modal').classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function closeModalOutside(e) {
-    if (e.target === document.getElementById('modal')) closeModal();
-  }
-
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-</script>
-</body>
-</html>
+    document.body.sty
